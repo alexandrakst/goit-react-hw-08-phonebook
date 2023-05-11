@@ -11,15 +11,15 @@ const handleFulfilled = (state, { payload }) => {
   state.error = null;
 };
 
-const handleRejected = (state, { payload }) => {
-  state.isLoading = false;
-  state.error = payload;
-};
-
 const handleUpdate = (state, { payload }) => {
   state.isLoading = false;
   state.items.push(payload);
   state.error = null;
+};
+
+const handleRejected = (state, { payload }) => {
+  state.isLoading = false;
+  state.error = payload;
 };
 
 const handleDelete = (state, { payload }) => {

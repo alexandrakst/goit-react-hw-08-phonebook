@@ -2,10 +2,10 @@ import { Li, Ul, P, Button } from './ContactList.styled';
 
 const ContactList = ({ contacts, onDeleteContact }) => (
   <Ul>
-    {contacts.map(({ id, name, phone }) => (
+    {contacts.map(({ id, name, number }) => (
       <Li key={id}>
         <P>
-          {name}: {phone}
+          {name}: {number}
         </P>
         <Button type="button" onClick={() => onDeleteContact(id)}>
           Delete

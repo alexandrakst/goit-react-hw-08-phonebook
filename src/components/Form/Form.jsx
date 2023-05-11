@@ -1,13 +1,9 @@
 import { useState } from 'react';
-import { nanoid } from 'nanoid';
 import { Label, Input, Div, Button } from './Form.styled';
 
 export default function Form({ onSubmit }) {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
-
-  const nameInputId = nanoid();
-  const numberInputId = nanoid();
 
   const fields = { name, number };
 
@@ -39,26 +35,26 @@ export default function Form({ onSubmit }) {
   return (
     <Div>
       <form onSubmit={handleSubmit}>
-        <Label htmlFor={nameInputId}>
+        <Label>
           Name
           <Input
             type="text"
-            id={nameInputId}
             name="name"
             value={name}
+            label="Name"
             onChange={handleInputChange}
             pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
             title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
             required
           />
         </Label>
-        <Label htmlFor={numberInputId}>
+        <Label>
           Number
           <Input
             type="tel"
-            id={numberInputId}
             name="number"
             value={number}
+            label="Number"
             onChange={handleInputChange}
             pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
             title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"

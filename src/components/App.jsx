@@ -1,65 +1,50 @@
-import { useEffect } from 'react';
-import { nanoid } from 'nanoid';
+import React, { useEffect, lazy } from 'react';
+import Layout from './Layout';
+import authSelectors from 'redux/auth/selectors';
+import PrivateRoute from './PrivateRoute';
+import PublicRoute from './PublicRoute';
+import { Route, Routes } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { setFilter } from '../redux/filterReducer';
-import Form from './Form/Form';
-import ContactList from './ContactList/ContactList';
-import Filter from './Filter/Filter';
-import { Heading, Contacts } from './App.styled';
-import * as contactsOperations from '../redux/contactsOperations';
-import * as contactsSelectors from '../redux/contactsSelectors';
+import { fetchCurrentUser } from 'redux/auth/operations';
+
+const HomePage = lazy(() => import('pages/HomePage/HomePage'));
+const RegisterPage = lazy(() => import('pages/RegisterPage/RegisterPage'));
+const LoginPage = lazy(() => import('pages/LoginPage/LoginPage'));
+const Contacts = lazy(() => import('pages/Contacts/Contacts'));
 
 export default function App() {
   const dispatch = useDispatch();
-
-  const contacts = useSelector(contactsSelectors.getContacts);
-
-  const filter = useSelector(state => state.filter);
+  const isRefreshing = useSelector(authSelectors.getIsRefreshing);
 
   useEffect(() => {
-    dispatch(contactsOperations.fetchContacts());
+    dispatch(fetchCurrentUser());
   }, [dispatch]);
 
-  const formSubmitHandler = data => {
-    const contact = {
-      id: nanoid(),
-      ...data,
-    };
-
-    const dublicateContact = contacts.find(item => item.name === contact.name);
-    const dublicateNumber = contacts.find(
-      item => item.number === contact.number
-    );
-
-    if (dublicateContact || dublicateNumber) {
-      return alert(`${data.name} is already in contacts`);
-    }
-    dispatch(contactsOperations.addContact(contact));
-  };
-
-  const onDeleteContact = id => {
-    dispatch(contactsOperations.deleteContact(id));
-  };
-
-  const changeFilter = e => {
-    const filterValue = e.target.value;
-    dispatch(setFilter(filterValue));
-  };
-
-  const visibleContacts = contacts.filter(contact =>
-    contact.name.toLowerCase().includes(filter.toLowerCase())
-  );
-
-  return (
-    <div>
-      <Heading>Phonebook</Heading>
-      <Form onSubmit={formSubmitHandler} />
-      <Contacts>Contacts</Contacts>
-      <Filter filter={filter} onChangeFilter={changeFilter} />
-      <ContactList
-        contacts={visibleContacts}
-        onDeleteContact={onDeleteContact}
-      />
-    </div>
+  return isRefreshing ? (
+    <b>Refreshing user...</b>
+  ) : (
+    <Routes>
+      <Route path="/" element={<Layout />}>
+        <Route path="/homepage" element={<HomePage />} />
+        <Route
+          path="/register"
+          element={
+            <PublicRoute redirectTo="/contacts" component={<RegisterPage />} />
+          }
+        />
+        <Route
+          path="/login"
+          element={
+            <PublicRoute redirectTo="/contacts" component={<LoginPage />} />
+          }
+        />
+        <Route
+          path="/contacts"
+          element={
+            <PrivateRoute redirectTo="/login" component={<Contacts />} />
+          }
+        />
+      </Route>
+    </Routes>
   );
 }
