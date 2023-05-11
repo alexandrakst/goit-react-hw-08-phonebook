@@ -1,6 +1,5 @@
 import { NavLink } from 'react-router-dom';
-import { Button } from '@mui/material';
-import { Wrapper, Paragraph } from './AuthMenu.styled';
+import { Wrapper, Paragraph, Button } from './AuthMenu.styled';
 
 export default function AuthMenu() {
   return (

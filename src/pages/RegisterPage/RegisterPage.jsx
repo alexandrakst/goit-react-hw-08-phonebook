@@ -1,8 +1,7 @@
 import * as authOperations from '../../redux/auth/operations';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { Form, Div } from './RegisterPage.styled';
-import { Button, TextField } from '@mui/material';
+import { Div, TextField, Button } from './RegisterPage.styled';
 
 export default function RegisterPage() {
   const dispatch = useDispatch();
@@ -33,7 +32,7 @@ export default function RegisterPage() {
 
   return (
     <div>
-      <Form onSubmit={handleSubmit} autoComplete="off">
+      <form onSubmit={handleSubmit} autoComplete="off">
         <Div>
           <TextField
             type="text"
@@ -61,10 +60,10 @@ export default function RegisterPage() {
             label="Password"
           />
         </Div>
-        <Button type="submit" variant="contained">
-          Register
-        </Button>
-      </Form>
+        <Div>
+          <Button type="submit">Register</Button>
+        </Div>
+      </form>
     </div>
   );
 }

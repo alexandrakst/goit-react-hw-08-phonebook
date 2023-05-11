@@ -1,12 +1,14 @@
 import styled from 'styled-components';
 
-export const Wrapper = styled.div`
+export const Div = styled.div`
   display: flex;
-  justify-content: space-between;
+  margin: 0;
 `;
-
-export const Paragraph = styled.div`
-  margin: 0 15px;
+export const P = styled.p`
+  margin: 0;
+`;
+export const Text = styled.p`
+  text-align: center;
 `;
 
 export const Button = styled.button`
@@ -22,7 +24,7 @@ export const Button = styled.button`
     font-weight: 500;
     line-height: 20px;
     list-style: none;
-    margin: 0;
+    margin:  0 10px;
     padding: 10px 12px;
     text-align: center;
     transition: all 200ms;

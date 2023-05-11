@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 export const Ul = styled.ul`
   margin-top: 0;
+  text-align: center;
 `;
 
 export const Li = styled.li`

@@ -9,7 +9,6 @@ import { Notify } from 'notiflix';
 import { Div } from './Contacts.styled';
 import { useDispatch, useSelector } from 'react-redux';
 import { setFilter } from '../../redux/contacts/filterReducer';
-import { Card } from '@mui/material';
 
 export default function Contacts() {
   const dispatch = useDispatch();
@@ -50,15 +49,17 @@ export default function Contacts() {
 
   return (
     <Div>
-      <Card variant="outlined">
+      <div variant="outlined">
         <Form onSubmit={formSubmitHandler} />
-      </Card>
-      <h2>Contacts</h2>
-      <Filter filter={filter} onChangeFilter={changeFilter} />
-      <ContactList
-        contacts={visibleContacts}
-        onDeleteContact={onDeleteContact}
-      />
+      </div>
+      <div>
+        <h2>Contacts</h2>
+        <Filter filter={filter} onChangeFilter={changeFilter} />
+        <ContactList
+          contacts={visibleContacts}
+          onDeleteContact={onDeleteContact}
+        />
+      </div>
     </Div>
   );
 }
